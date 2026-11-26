@@ -45,3 +45,4 @@ def registrar_expediente(registros, dni, nombres, tipo, asunto, folios_texto):
     ordenar_expedientes(registros)
     guardar_en_archivo(registro)
     return registro
+
