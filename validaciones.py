@@ -20,3 +20,4 @@ def datos_validos(dni, folios_texto):
         and es_numerico(folios_texto)
         and int(folios_texto) > 0
     )
+

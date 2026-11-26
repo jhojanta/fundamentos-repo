@@ -27,3 +27,4 @@ def guardar_en_archivo(registro):
     linea = SEPARADOR.join(str(registro[campo]) for campo in CAMPOS)
     with open(ARCHIVO, "a", encoding="utf-8") as archivo:
         archivo.write(linea + "\n")
+
