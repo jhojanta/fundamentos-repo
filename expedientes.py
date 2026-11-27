@@ -1,9 +1,11 @@
-"""expedientes.py - Logica de expedientes: codigo, ordenamiento y registro."""
+﻿"""expedientes.py - Logica de expedientes: codigo, ordenamiento y registro."""
+
+from datetime import date, datetime
 
 from validaciones import datos_validos
 from persistencia import guardar_en_archivo
 
-ANIO = 2026
+FORMATO_FECHA = "%Y-%m-%d %H:%M:%S"
 
 
 def siguiente_numero(registros, anio):
@@ -18,8 +20,11 @@ def siguiente_numero(registros, anio):
     return max(numeros, default=0) + 1
 
 
-def generar_codigo(registros, anio=ANIO):
-    """Codigo correlativo con formato AAAA-NNNN (ej. 2026-0001)."""
+def generar_codigo(registros, anio=None):
+    """Codigo correlativo con formato AAAA-NNNN (ej. 2026-0001).
+    Si no se indica el anio, usa el anio actual del sistema."""
+    if anio is None:
+        anio = date.today().year
     return f"{anio}-{siguiente_numero(registros, anio):04d}"
 
 
@@ -29,7 +34,7 @@ def ordenar_expedientes(registros):
 
 
 def registrar_expediente(registros, dni, nombres, tipo, asunto, folios_texto):
-    """Valida, genera el codigo, guarda y ordena. Devuelve el registro o None."""
+    """Valida, genera el codigo, sella la fecha, guarda y ordena. Devuelve el registro o None."""
     if not datos_validos(dni, folios_texto):
         return None
 
@@ -40,9 +45,9 @@ def registrar_expediente(registros, dni, nombres, tipo, asunto, folios_texto):
         "tipo": tipo,
         "asunto": asunto,
         "folios": int(folios_texto),
+        "fecha": datetime.now().strftime(FORMATO_FECHA),
     }
     registros.append(registro)
     ordenar_expedientes(registros)
     guardar_en_archivo(registro)
     return registro
-

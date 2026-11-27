@@ -16,6 +16,7 @@ def mostrar_cargo(registro):
     """Comprobante digital equivalente al cargo entregado en ventanilla."""
     print("\nExpediente registrado correctamente.")
     print("Codigo generado:", registro["codigo"])
+    print("Fecha de ingreso:", registro["fecha"])
     print("Cargo digital emitido para:", registro["nombres"])
 
 

@@ -2,7 +2,7 @@
 
 ARCHIVO = "expedientes.txt"
 SEPARADOR = "|"
-CAMPOS = ["codigo", "dni", "nombres", "tipo", "asunto", "folios"]
+CAMPOS = ["codigo", "dni", "nombres", "tipo", "asunto", "folios", "fecha"]
 
 
 def leer_desde_archivo():
@@ -16,6 +16,8 @@ def leer_desde_archivo():
                     valores = linea.split(SEPARADOR)
                     registro = dict(zip(CAMPOS, valores))
                     registro["folios"] = int(registro["folios"])
+                    # Expedientes antiguos (sin fecha) siguen siendo legibles
+                    registro.setdefault("fecha", "sin fecha")
                     registros.append(registro)
     except FileNotFoundError:
         pass
